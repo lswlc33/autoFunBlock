@@ -15,7 +15,8 @@ def 挖矿(state):
 
     response = requests.post(url, data=payload, headers=headers)
 
-    return (response.json())
+    return response.json()
+
 
 def 剩余挖矿时间():
     url = "https://block-api.lucklyworld.com/v11/api/cave/auto/digging/page"
@@ -24,6 +25,4 @@ def 剩余挖矿时间():
 
     data = response.json()
 
-    return round(float(data['autoDiggingOddSecond'])/3600, 2)
-
-
+    return round(float(data["autoDiggingOddSecond"]) / 3600, 2)

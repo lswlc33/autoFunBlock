@@ -89,7 +89,7 @@ def 乌龟喂养(petId):
 def 捡起宝石():
     url = "https://block-api.lucklyworld.com/v6/api/pets/pickup/rocks"
     response = requests.post(url, headers=headers)
-    return(response.json())
+    return response.json()
 
 
 def 宠物心跳():
@@ -105,7 +105,6 @@ def 捡宝历史():
 
 
 if __name__ == "__main__":
-    
 
     data = {
         "petId": 209681,

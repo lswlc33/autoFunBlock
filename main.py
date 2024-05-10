@@ -1,4 +1,4 @@
-import threading,os, time
+import threading, os, time
 from 乌龟 import *
 from 宝石矿洞 import *
 from 登录信息 import *
@@ -8,11 +8,13 @@ data = ""
 history = ""
 乌龟ID = ""
 
+
 def cleanT():
-    if os.name == 'nt':
-        os.system('cls')
+    if os.name == "nt":
+        os.system("cls")
     else:
-        os.system('clear')
+        os.system("clear")
+
 
 def pet_heartbeat():
     while True:
@@ -20,7 +22,7 @@ def pet_heartbeat():
             宠物心跳()
             time.sleep(1)
         except Exception as e:
-            print('\n刷新异常!')
+            print("\n刷新异常!")
             time.sleep(1)
 
 
@@ -32,16 +34,18 @@ def update_data():
             history = dict(捡宝历史())
             time.sleep(1)
         except Exception as e:
-            print('\n刷新异常!')
+            print("\n刷新异常!")
             time.sleep(1)
+
 
 def pick_up():
     while True:
         try:
             捡起宝石()
         except Exception as e:
-            print('\n刷新异常!')
+            print("\n刷新异常!")
             time.sleep(60)
+
 
 def main():
     while True:
@@ -64,7 +68,7 @@ def main():
                 f"今日时长: {history['list'][0]['duration']}\n "
                 f"今日获取: {data['todayRocks']} 宝石   {data['todayShells']}贝壳\n",
             )
-            if bool(get_value('auto_feed')):
+            if bool(get_value("auto_feed")):
                 if int(data["hunger"]) < 80:
                     乌龟喂养(乌龟ID)
                     乌龟清理(乌龟ID)
@@ -72,10 +76,11 @@ def main():
             time.sleep(1)
         except Exception as e:
             if data != "":
-                print('\n刷新异常!')
+                print("\n刷新异常!")
             else:
-                print('\n连接中...请等待！')
+                print("\n连接中...请等待！")
             time.sleep(1)
+
 
 def cave_mine():
     while True:
@@ -83,7 +88,7 @@ def cave_mine():
             挖矿(0)
             挖矿(1)
             if 剩余挖矿时间() < 24.00:
-                挖矿(2) # 自动加时
+                挖矿(2)  # 自动加时
         except:
             pass
         time.sleep(600)
@@ -93,7 +98,7 @@ if __name__ == "__main__":
     # 检查登录信息
     cleanT()
     is_login = 验证token()
-    if is_login.get('errorCode') == None:
+    if is_login.get("errorCode") == None:
         print(f"\n你好，{is_login['nickname']}!")
         time.sleep(1)
     else:
@@ -110,12 +115,8 @@ if __name__ == "__main__":
     pickup_thread = threading.Thread(target=pick_up)
     pickup_thread.start()
 
-    if get_value('auto_extend'):
+    if get_value("auto_extend"):
         cavemine_thread = threading.Thread(target=cave_mine)
         cavemine_thread.start()
 
     main()
-
-
-
-
