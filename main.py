@@ -103,8 +103,9 @@ if __name__ == "__main__":
         time.sleep(1)
     else:
         print("\ntoken 验证失败，请重新登录!")
-        exit()
         input()
+        exit()
+
 
     # 开始挂
     update_thread = threading.Thread(target=update_data)

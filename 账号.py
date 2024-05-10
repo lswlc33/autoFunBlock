@@ -48,8 +48,9 @@ if __name__ == "__main__":
         print("发送成功")
     else:
         print(f"发送失败! {res.get('message')}")
-        exit()
         input()
+        exit()
+
     while True:
         code = input("请输入验证码:")
         res2 = 登录(num, code)
