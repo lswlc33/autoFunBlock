@@ -1,2 +1,5 @@
 /setting.ini
 /__pycache__
+build
+dist
+/*.spec
