@@ -20,7 +20,7 @@ if __name__ == "__main__":
             cleanT()
             print(
                 f"\n {pTitle('大逃杀监控')}\n\n",
-                f"当前期数: {data['issue']}\n\n",
+                f"当前期数: {data['issue']}\n",
                 f"当前时间: {当前时间()}\n\n",
                 f"{pTitle('本期信息')}\n\n",
                 f"倒计时: {data['countdown']}\n",
