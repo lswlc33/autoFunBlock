@@ -1,4 +1,5 @@
 import os
+import time
 
 
 def pTitle(str):
@@ -14,3 +15,7 @@ def cleanT():
         os.system("cls")
     else:
         os.system("clear")
+
+
+def 当前时间():
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
