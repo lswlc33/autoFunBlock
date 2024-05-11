@@ -47,6 +47,6 @@ def get_real_room(num):
         "茶水间",
         "音乐室",
     ]
-    return rooms[num - 1]
+    return rooms[int(num) - 1]
 
 
