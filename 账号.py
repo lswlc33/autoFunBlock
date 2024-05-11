@@ -1,5 +1,5 @@
 import requests
-from 登录信息 import write_value, get_value
+from lib.登录信息 import write_value, get_value
 
 headers = {
     "User-Agent": "com.caike.union/4.0.2-90585 Dalvik/2.1.0 (Linux; U; Android 14; 2211133C Build/UKQ1.230804.001)",

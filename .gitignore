@@ -1,10 +1,8 @@
-/setting.ini
-/__pycache__
+*.ini
+__pycache__
 build
 dist
-/*.spec
-/*.ini
-/*.log
-/*.txt
-/*.csv
-/*.xlsx
+data
+*.spec
+*.log
+

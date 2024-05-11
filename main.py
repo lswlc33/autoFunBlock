@@ -1,7 +1,7 @@
 import threading, os, time
-from 乌龟 import *
-from 宝石矿洞 import *
-from 登录信息 import *
+from lib.乌龟 import *
+from lib.宝石矿洞 import *
+from lib.登录信息 import *
 from 账号 import 验证token
 
 data = ""

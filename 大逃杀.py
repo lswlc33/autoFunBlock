@@ -1,6 +1,6 @@
 import requests, time, os
 import csv
-from 登录信息 import headers
+from lib.登录信息 import headers
 
 session = requests.Session()
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
         )
 
         if data["state"] == 2 and 当前期数 != data["issue"]:
-            with open("escape.csv", "a", newline="", encoding="utf-8") as f:
+            with open("data/escape.csv", "a", newline="", encoding="utf-8") as f:
                 writer = csv.writer(f)
                 writer.writerow(
                     [

@@ -1,5 +1,5 @@
 import requests
-from 登录信息 import headers
+from lib.登录信息 import headers
 
 session = requests.Session()
 

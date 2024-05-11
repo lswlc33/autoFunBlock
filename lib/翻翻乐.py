@@ -1,6 +1,6 @@
 import requests
 import json
-from 登录信息 import headers
+from lib.登录信息 import headers
 
 
 def 游戏入场(筹码):

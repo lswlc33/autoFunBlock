@@ -1,20 +1,23 @@
-from configparser import ConfigParser
 import os
+from configparser import ConfigParser
 
+config = ConfigParser()
+ini_path = "data/setting.ini"
 
 def init_ini():
-    config = ConfigParser()
-    ini_path = "setting.ini"
     # 如果文件不存在，创建并初始化 setting.ini
     if not os.path.exists(ini_path):
-        config["setting"] = {"token": "", "auto_feed": "true", "auto_extend": "false"}
+        os.makedirs(os.path.dirname(ini_path), exist_ok=True)
+        config["setting"] = {
+            "token": "", 
+            "auto_feed": "true", 
+            "auto_extend": "false"
+        }
         with open(ini_path, "w") as configfile:
             config.write(configfile)
 
 
 def write_value(key, value):
-    config = ConfigParser()
-    ini_path = "setting.ini"
     # 读取配置文件
     config.read(ini_path)
     # 写入新的 token 值
@@ -25,8 +28,6 @@ def write_value(key, value):
 
 
 def get_value(key):
-    config = ConfigParser()
-    ini_path = "setting.ini"
     # 读取配置文件
     config.read(ini_path)
     # 返回 token 的值
