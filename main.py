@@ -2,7 +2,7 @@ import threading, os, time
 from lib.乌龟 import *
 from lib.宝石矿洞 import *
 from lib.登录信息 import *
-from 账号 import 验证token
+from lib.账号 import 验证token
 
 data = ""
 history = ""
@@ -20,7 +20,7 @@ def pet_heartbeat():
     while True:
         try:
             宠物心跳()
-            time.sleep(1)
+            time.sleep(2)
         except Exception as e:
             print("\n刷新异常!")
             time.sleep(1)
