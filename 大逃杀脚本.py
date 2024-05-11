@@ -41,7 +41,7 @@ if __name__ == "__main__":
                         ]
                     )
                 当前期数 = data["issue"]
-            time.sleep(1)
         except Exception as e:
             print(f"错误: {e}")
+        time.sleep(1)
 
