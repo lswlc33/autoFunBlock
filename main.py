@@ -70,6 +70,8 @@ def main():
                 f"今日时长: {history['list'][0]['duration']}\n "
                 f"24小时预计: {round(时薪*24,3)} 宝石   时薪: {round(时薪,3)} 宝石\n "
                 f"今日获取: {data['todayRocks']} 宝石   {data['todayShells']} 贝壳\n",
+                f"\n {pTitle('开源项目')}\n\n",
+                f"项目地址: github.com/lswlc33/autoFunBlock "
             )
             if bool(get_value("auto_feed")):
                 if int(data["hunger"]) < 80:

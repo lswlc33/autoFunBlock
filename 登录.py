@@ -17,8 +17,8 @@ if __name__ == "__main__":
         res2 = 登录(num, code)
         print(res2.get("token"))
         if res.get("errorCode") == 400:
+            print(f"登录失败! {res.get('message')}")
+        else:
             print("登录成功! token 已经写入 setting.ini")
             write_value("token", res2.get("token"))
             break
-        else:
-            print(f"登录失败! {res.get('message')}")
