@@ -1,5 +1,4 @@
 import csv
-import os
 import time
 from lib.大逃杀 import 大逃杀_信息
 from lib.雪の函数 import cleanT, pTitle
