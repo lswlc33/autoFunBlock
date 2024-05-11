@@ -1,28 +1,14 @@
-#coding:utf-8
 import threading, os, time
 from datetime import datetime
 from lib.乌龟 import *
 from lib.宝石矿洞 import *
 from lib.登录信息 import *
 from lib.账号 import 验证token
+from lib.雪の函数 import cleanT, pTitle
 
 data = ""
 history = ""
 乌龟ID = ""
-
-def pTitle(str):
-    title = f" {str} "
-    terminal_width = os.get_terminal_size().columns
-    terminal_width -= len(title) + 2
-    centered_title = title.center(terminal_width, '-')
-    return(centered_title)
-
-
-def cleanT():
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
 
 
 def pet_heartbeat():
@@ -66,8 +52,7 @@ def main():
                             .replace("小时", " ")
                             .replace("分钟", "")
                             .split())
-                    )) / 60
-                )
+                )) / 60)
             print(
                 f"\n 方块兽乌龟面板    时间: {time.strftime('%m-%d %H:%M:%S')}",
                 f"\n 乌龟自动喂养: {get_value('auto_feed')}   矿洞自动加时: {get_value('auto_extend')}",
