@@ -1,3 +1,4 @@
+#coding:utf-8
 import threading, os, time
 from datetime import datetime
 from lib.乌龟 import *
