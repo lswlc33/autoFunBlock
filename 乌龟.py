@@ -1,26 +1,19 @@
 import requests
 from 登录信息 import headers
 
+session = requests.Session()
 
 def 召回显示乌龟(state, petId):
-    """
-    state 1: 显示乌龟
-    state 0: 不显示乌龟
-    petId : 乌龟ID
-    """
     url = "https://block-api.lucklyworld.com/v6/api/blockbeast/pets/desktop/display"
-
     payload = f"state={state}&petId={petId}"
-
-    response = requests.post(url, data=payload, headers=headers)
-
+    response = session.post(url, data=payload, headers=headers)
     print(response.json())
 
 
 def 获取乌龟信息():
     url = "https://block-api.lucklyworld.com/v6/api/blockbeast/pets/index"
 
-    response = requests.post(url, headers=headers)
+    response = session.post(url, headers=headers)
 
     data = response.json()
 
@@ -61,13 +54,13 @@ def 获取乌龟信息():
 def 升级探测器():
     url = "https://block-api.lucklyworld.com/v6/api/pets/detector/upgrade"
 
-    response = requests.post(url, headers=headers)
+    response = session.post(url, headers=headers)
 
     print(response.json())
 
 
 def 乌龟清理(petId):
-    response = requests.post(
+    response = session.post(
         url="https://block-api.lucklyworld.com/v6/api/blockbeast/pets/clean",
         data=f"petId={petId}",
         headers=headers,
@@ -77,7 +70,7 @@ def 乌龟清理(petId):
 
 
 def 乌龟喂养(petId):
-    response = requests.post(
+    response = session.post(
         url="https://block-api.lucklyworld.com/v6/api/blockbeast/pets/feed",
         data=f"petId={petId}",
         headers=headers,
@@ -88,19 +81,19 @@ def 乌龟喂养(petId):
 
 def 捡起宝石():
     url = "https://block-api.lucklyworld.com/v6/api/pets/pickup/rocks"
-    response = requests.post(url, headers=headers)
+    response = session.post(url, headers=headers)
     return response.json()
 
 
 def 宠物心跳():
     url = "https://block-api.lucklyworld.com/v6/api/blockbeast/pets/desktop/ping"
-    response = requests.post(url, headers=headers)
+    response = session.post(url, headers=headers)
     return response.json()
 
 
 def 捡宝历史():
     url = "https://block-api.lucklyworld.com/v6/api/pets/pickup/rocks/logs"
-    response = requests.post(url, headers=headers)
+    response = session.post(url, headers=headers)
     return response.json()
 
 

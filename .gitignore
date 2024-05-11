@@ -4,3 +4,7 @@ build
 dist
 /*.spec
 /*.ini
+/*.log
+/*.txt
+/*.csv
+/*.xlsx
