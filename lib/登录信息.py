@@ -4,15 +4,12 @@ from configparser import ConfigParser
 config = ConfigParser()
 ini_path = "data/setting.ini"
 
+
 def init_ini():
     # 如果文件不存在，创建并初始化 setting.ini
     if not os.path.exists(ini_path):
         os.makedirs(os.path.dirname(ini_path), exist_ok=True)
-        config["setting"] = {
-            "token": "", 
-            "auto_feed": "true", 
-            "auto_extend": "false"
-        }
+        config["setting"] = {"token": "", "auto_feed": "true", "auto_extend": "false"}
         with open(ini_path, "w") as configfile:
             config.write(configfile)
 

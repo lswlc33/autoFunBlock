@@ -3,6 +3,7 @@ from lib.登录信息 import headers
 
 session = requests.Session()
 
+
 def 大逃杀_信息():
     response = session.post(
         url="https://block-api.lucklyworld.com/v11/api/room/escape/data",
@@ -33,7 +34,7 @@ def 大逃杀_投入(roomNumber, costMedal):
         headers=headers,
     ).json()
 
-    return(response)
+    return response
 
 
 def get_real_room(num):
@@ -48,5 +49,3 @@ def get_real_room(num):
         "音乐室",
     ]
     return rooms[int(num) - 1]
-
-

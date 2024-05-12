@@ -3,6 +3,7 @@ from lib.登录信息 import headers
 
 session = requests.Session()
 
+
 def 召回显示乌龟(state, petId):
     url = "https://block-api.lucklyworld.com/v6/api/blockbeast/pets/desktop/display"
     payload = f"state={state}&petId={petId}"
@@ -98,7 +99,6 @@ def 捡宝历史():
 
 
 if __name__ == "__main__":
-
     data = {
         "petId": 209681,
         "total": "15.2756",

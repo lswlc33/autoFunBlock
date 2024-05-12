@@ -46,13 +46,20 @@ def main():
     while True:
         try:
             cleanT()
-            时薪 = float(data['todayRocks'])/(
-                sum(int(x) * 60 ** i for i, x in enumerate(
-                    reversed(history['list'][0]['duration']
+            时薪 = float(data["todayRocks"]) / (
+                sum(
+                    int(x) * 60**i
+                    for i, x in enumerate(
+                        reversed(
+                            history["list"][0]["duration"]
                             .replace("小时", " ")
                             .replace("分钟", "")
-                            .split())
-                )) / 60)
+                            .split()
+                        )
+                    )
+                )
+                / 60
+            )
             print(
                 f"\n 方块兽乌龟面板    时间: {time.strftime('%m-%d %H:%M:%S')}",
                 f"\n 乌龟自动喂养: {get_value('auto_feed')}   矿洞自动加时: {get_value('auto_extend')}",
@@ -71,7 +78,7 @@ def main():
                 f"24小时预计: {round(时薪*24,3)} 宝石   时薪: {round(时薪,3)} 宝石\n "
                 f"今日获取: {data['todayRocks']} 宝石   {data['todayShells']} 贝壳\n",
                 f"\n {pTitle('开源项目')}\n\n",
-                f"项目地址: github.com/lswlc33/autoFunBlock "
+                f"项目地址: github.com/lswlc33/autoFunBlock ",
             )
             if bool(get_value("auto_feed")):
                 if int(data["hunger"]) < 80:
@@ -110,7 +117,6 @@ if __name__ == "__main__":
         print("\ntoken 验证失败，请重新登录!")
         input()
         exit()
-
 
     # 开始挂
     update_thread = threading.Thread(target=update_data)

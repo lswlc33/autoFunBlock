@@ -4,7 +4,6 @@ from lib.登录信息 import headers
 
 
 def 游戏入场(筹码):
-
     url = "https://block-api.lucklyworld.com/v11/api/multi/game/start"
 
     payload = f"multi={筹码}"
@@ -15,7 +14,6 @@ def 游戏入场(筹码):
 
 
 def 游戏提交():
-
     url = "https://block-api.lucklyworld.com/v11/api/multi/game/chess/select"
 
     payload = json.dumps(
