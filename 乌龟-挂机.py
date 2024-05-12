@@ -81,7 +81,7 @@ def main():
                 f"项目地址: github.com/lswlc33/autoFunBlock ",
             )
             if bool(get_value("auto_feed")):
-                if int(data["hunger"]) < 80:
+                if int(data["hunger"]) < 75:
                     乌龟喂养(乌龟ID)
                     乌龟清理(乌龟ID)
 
