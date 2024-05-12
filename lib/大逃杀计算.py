@@ -28,24 +28,19 @@ def get_f_rate(float):
     return f"{math.floor(float * 1000) / 10}%"
 
 
-def get_best_room():
-    best_rate = 0
-    for i in range(1, 9):
-        rate = get_room_rate(1000, i) + abs(
-            get_room_rate(1000, i) - get_room_rate(10, i)
-        )
-        if rate > best_rate:
-            best_rate = rate
-            best_room = i
-    return best_room
+def get_best_room(type=1):
+    if type == 1:
+        best_room = 0
+        best_rate = 0
+        for i in range(1, 9):
+            rate = get_room_rate(1000, i)
+            if rate > best_rate:
+                best_rate = rate
+                best_room = i
+        return best_room
+    elif type == 2:
+        pass
 
 
 if __name__ == "__main__":
-    for i in range(1, 9):
-        rate = get_room_rate(1000, i) + abs(
-            get_room_rate(1000, i) - get_room_rate(10, i)
-        )
-        # print(f"{get_real_room(i)} 最近 1000 场遇刺的概率为 {get_f_rate(get_room_rate(1000, i))}")
-        # print(f"{get_real_room(i)} 最近 10 场遇刺的概率为 {get_f_rate(get_room_rate(10, i))}")
-        print(f"{get_real_room(i)} 本场遇刺的概率为 {get_f_rate(rate)}")
     print(get_real_room(get_best_room()))

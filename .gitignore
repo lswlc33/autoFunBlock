@@ -5,4 +5,4 @@ dist
 data
 *.spec
 *.log
-
+*.ipynb
