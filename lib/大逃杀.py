@@ -33,7 +33,7 @@ def 大逃杀_投入(roomNumber, costMedal):
         headers=headers,
     ).json()
 
-    print(response)
+    return(response)
 
 
 def get_real_room(num):
