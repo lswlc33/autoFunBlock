@@ -1,40 +1,53 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
+# 工作流程名称
 name: 打包 exe
 
 on:
+    # 允许用户手动触发工作流程
+    workflow_dispatch:
+    # 仓库收到 push 和 pr 时触发工作流程
     push:
         branches: ["master"]
     pull_request:
         branches: ["master"]
 
+# GITHUB_TOKEN 的权限
 permissions:
     contents: read
 
 jobs:
     build:
+        # 指定运行环境
         runs-on: windows-latest
-
+        # 任务步骤
         steps:
-            - uses: actions/checkout@v4
-            - name: Set up Python 3.10
-              uses: actions/setup-python@v3
+            # 拉取仓库代码（必须）
+            - uses: actions/checkout@v4.1.5
+            # 设置 Python 版本
+            - name: Set up Python
+              uses: actions/setup-python@v5.1.0
               with:
                   python-version: "3.10"
+                  # 从缓存中安装 pip (跳过下载过程)
                   cache: "pip"
+            # pip 安装依赖
             - name: Install dependencies
               run: |
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
+            # 打包 exe
             - name: Package
               run: |
                   pyinstaller -F 登录.py
                   pyinstaller -F 乌龟-挂机.py
                   pyinstaller -F 大逃杀-监控.py
                   pyinstaller -F 大逃杀-定投.py
+            # 上传结果为 artifact
             - name: Upload results
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v4.3.3
               with:
+                  # 结果名
                   name: 打包结果
+                  # 结果文件（可以是单个文件，多个文件）
                   path: dist/*.exe
