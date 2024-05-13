@@ -28,9 +28,13 @@ jobs:
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
             - name: Package
-              run: pyinstaller -F 登录.py
+              run: |
+                pyinstaller -F 登录.py
+                pyinstaller -F 乌龟-挂机.exe
+                pyinstaller -F 大逃杀-监控.exe
+                pyinstaller -F 大逃杀-定投.exe
             - name: Upload results
               uses: actions/upload-artifact@v4
               with:
-                  name: 构建结果
+                  name: 打包结果
                   path: dist/*.exe
