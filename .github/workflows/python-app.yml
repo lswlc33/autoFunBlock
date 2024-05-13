@@ -30,9 +30,9 @@ jobs:
             - name: Package
               run: |
                 pyinstaller -F 登录.py
-                pyinstaller -F 乌龟-挂机.exe
-                pyinstaller -F 大逃杀-监控.exe
-                pyinstaller -F 大逃杀-定投.exe
+                pyinstaller -F 乌龟-挂机.py
+                pyinstaller -F 大逃杀-监控.py
+                pyinstaller -F 大逃杀-定投.py
             - name: Upload results
               uses: actions/upload-artifact@v4
               with:
