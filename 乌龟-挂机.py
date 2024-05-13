@@ -4,15 +4,38 @@ from lib.乌龟 import *
 from lib.宝石矿洞 import *
 from lib.登录信息 import *
 from lib.账号 import 验证token
-from lib.雪の函数 import cleanT, pTitle
+from lib.雪の函数 import cleanT, pTitle, is_time_to_sleep
 
 data = ""
 history = ""
 乌龟ID = ""
+is_sleep = 0
 
 
 def pet_heartbeat():
+    global is_sleep
     while True:
+        if not data:
+            continue
+        # 睡眠检测
+        if is_time_to_sleep():
+            if data["desktopDisplay"] == 1:
+                召回显示乌龟(0, 乌龟ID)
+                time.sleep(1)
+            if not is_sleep:
+                召回显示乌龟(0, 乌龟ID)
+            time.sleep(60)
+            is_sleep = 1
+            continue
+        else:
+            if data["desktopDisplay"] == 0:
+                召回显示乌龟(1, 乌龟ID)
+                time.sleep(1)
+            if is_sleep:
+                召回显示乌龟(1, 乌龟ID)
+                is_sleep = 0
+
+        # 心跳
         try:
             宠物心跳()
             time.sleep(2)
@@ -22,6 +45,7 @@ def pet_heartbeat():
 
 
 def update_data():
+    """刷新数据"""
     while True:
         try:
             global data, history
@@ -34,7 +58,11 @@ def update_data():
 
 
 def pick_up():
+    """捡起宝石"""
     while True:
+        if is_sleep:
+            time.sleep(60)
+            continue
         try:
             捡起宝石()
         except Exception as e:
@@ -65,7 +93,7 @@ def main():
                 f"\n 乌龟自动喂养: {get_value('auto_feed')}   矿洞自动加时: {get_value('auto_extend')}",
                 f"\n\n {pTitle('我的资产')}\n\n",
                 f"{data['rocks']} 宝石\t   {data['shells']}贝壳",
-                f"\n\n {pTitle('我的乌龟')}\n\n",
+                f"\n\n {pTitle(f'我的乌龟 {{}}'.format('(睡眠中)' if is_sleep else ''))}\n\n"
                 f"乌龟ID: {data['id']}\t   组件SN: {data['sn']}\n",
                 f"乌龟性别：{data['gender']}\t代数: {data['generation']}\n",
                 f"乌龟等级: {data['level']}\t进度: {data['levelProgress']}%\n",
@@ -75,7 +103,7 @@ def main():
                 f"探测器: {data['detector']}级",
                 f"\n\n {pTitle('今日报告')}\n\n",
                 f"今日时长: {history['list'][0]['duration']}\n "
-                f"24小时预计: {round(时薪*24,3)} 宝石   时薪: {round(时薪,3)} 宝石\n "
+                f"今日预计: {round(时薪*24,3)} 宝石   时薪: {round(时薪,3)} 宝石\n "
                 f"今日获取: {data['todayRocks']} 宝石   {data['todayShells']} 贝壳\n",
                 f"\n {pTitle('开源项目')}\n\n",
                 f"项目地址: github.com/lswlc33/autoFunBlock ",

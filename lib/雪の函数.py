@@ -1,5 +1,6 @@
 import os
 import time
+import datetime
 
 
 def pTitle(str):
@@ -19,3 +20,11 @@ def cleanT():
 
 def 当前时间():
     return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+
+
+def is_time_to_sleep():
+    current_time = datetime.datetime.now().time()
+    if current_time >= datetime.time(0, 0) and current_time <= datetime.time(8, 0):
+        return True
+    else:
+        return False

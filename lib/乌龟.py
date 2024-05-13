@@ -5,6 +5,11 @@ session = requests.Session()
 
 
 def 召回显示乌龟(state, petId):
+    """
+    召回显示乌龟
+    state: 1 显示 0 隐藏
+    petId: 乌龟ID
+    """
     url = "https://block-api.lucklyworld.com/v6/api/blockbeast/pets/desktop/display"
     payload = f"state={state}&petId={petId}"
     response = session.post(url, data=payload, headers=headers)
@@ -47,8 +52,8 @@ def 获取乌龟信息():
         "healthiness": data["healthiness"]["currentVal"],
         # 探测器
         "detector": data["detector"]["level"],
+        "desktopDisplay": data["desktopDisplay"],
     }
-
     return res
 
 
