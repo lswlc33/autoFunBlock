@@ -1,7 +1,7 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
 # 工作流程名称
-name: build exe
+name: Build exe
 
 on:
     # 允许用户手动触发工作流程
@@ -47,7 +47,11 @@ jobs:
             - name: Upload results
               uses: actions/upload-artifact@v4.3.3
               with:
-                  # 结果名
-                  name: 打包结果.zip
+                  # 结果名(无论写什么，结果始终是zip最后)
+                  name: result_exe
                   # 结果文件（可以是单个文件，多个文件）
-                  path: dist/*.exe
+                  path: dist
+                  # 压缩级别(默认0, 0-9, 0 为不压缩)
+                  compression-level: 0
+                  # 保留时间(默认90)
+                  retention-days: 90
