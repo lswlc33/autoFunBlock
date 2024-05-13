@@ -32,5 +32,5 @@ jobs:
             - name: Upload results
               uses: actions/upload-artifact@v4
               with:
-                  name: 打包结果
-                  path: dist
+                  name: 构建结果
+                  path: dist/*.exe
