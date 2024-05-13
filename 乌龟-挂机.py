@@ -94,7 +94,7 @@ def main():
                 f"\n\n {pTitle('我的资产')}\n\n",
                 f"{data['rocks']} 宝石\t   {data['shells']}贝壳",
                 f"\n\n {pTitle(f'我的乌龟 {{}}'.format('(睡眠中)' if is_sleep else ''))}\n\n"
-                f"乌龟ID: {data['id']}\t   组件SN: {data['sn']}\n",
+                f" 乌龟ID: {data['id']}\t   组件SN: {data['sn']}\n",
                 f"乌龟性别：{data['gender']}\t代数: {data['generation']}\n",
                 f"乌龟等级: {data['level']}\t进度: {data['levelProgress']}%\n",
                 f"乌龟战力: {data['combatPower']}\n",
