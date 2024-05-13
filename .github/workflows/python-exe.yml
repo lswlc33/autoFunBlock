@@ -47,6 +47,7 @@ jobs:
             - name: Upload results
               uses: actions/upload-artifact@v4.3.3
               with:
+                  name: result_exe
                   # 结果文件（可以是单个文件，多个文件）
                   path: dist
                   # 压缩级别(默认0, 0-9, 0 为不压缩)
