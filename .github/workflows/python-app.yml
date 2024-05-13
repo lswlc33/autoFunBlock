@@ -26,6 +26,10 @@ jobs:
               run: |
                   python -m pip install --upgrade pip
                   pip install -r requirements.txt
-            - name: Test
-              run: |
-                  pyinstaller -F 乌龟-挂机.py
+            - name: Package
+              run: pyinstaller -F 乌龟-挂机.py
+            - name: Upload results
+              uses: actions/upload-artifact@v4
+              with:
+                  name: 乌龟-挂机.exe
+                  path: dist
