@@ -1,5 +1,4 @@
 import os
-import time
 import datetime
 
 
@@ -7,7 +6,7 @@ def pTitle(str):
     title = f" {str} "
     terminal_width = os.get_terminal_size().columns
     title_length = sum(2 if is_chinese(ch) else 1 for ch in list(title))
-    terminal_width -= int(title_length/2) + 2
+    terminal_width -= int(title_length / 2) + 2
     centered_title = title.center(terminal_width, "-")
     return centered_title
 
@@ -27,7 +26,7 @@ def cleanT():
 
 
 def 当前时间():
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 def is_time_to_sleep():
