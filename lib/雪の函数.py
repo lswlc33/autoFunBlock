@@ -19,19 +19,17 @@ def is_chinese(char):
 
 
 def cleanT():
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
+    os.system("cls" if os.name == "nt" else "clear")
 
 
-def 当前时间():
-    return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+def 当前时间(type=1):
+    now_time = datetime.datetime.now()
+    if type == 1:
+        return now_time.strftime("%Y-%m-%d %H:%M:%S")
+    if type == 2:
+        return now_time.strftime("%m月%d %H:%M:%S")
 
 
 def is_time_to_sleep():
     current_time = datetime.datetime.now().time()
-    if current_time >= datetime.time(0, 0) and current_time <= datetime.time(8, 0):
-        return True
-    else:
-        return False
+    return datetime.time(0, 0) <= current_time <= datetime.time(8, 0)
