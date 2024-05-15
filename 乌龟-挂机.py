@@ -67,7 +67,7 @@ def main():
     while True:
         try:
             cleanT()
-            时薪 = float(data["todayRocks"]) / (
+            duration = (
                 sum(
                     int(x) * 60**i
                     for i, x in enumerate(
@@ -81,6 +81,7 @@ def main():
                 )
                 / 60
             )
+            时薪 = float(data["todayRocks"]) / duration if duration else 0
             print(
                 f"\n 方块兽乌龟面板    时间: {time.strftime('%m-%d %H:%M:%S')}",
                 f"\n 乌龟自动喂养: {get_value('auto_feed')}   矿洞自动加时: {get_value('auto_extend')}",
