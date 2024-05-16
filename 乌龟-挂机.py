@@ -97,7 +97,7 @@ def main():
                 f"探测器: {data['detector']}级",
                 f"\n\n {pTitle(f'最新报告: {{}}'.format(history['list'][0]['date']))}\n\n",
                 f"今日时长: {history['list'][0]['duration']}\n "
-                f"今日预计: {round(时薪*24,3)} 宝石   时薪: {round(时薪,3)} 宝石\n "
+                f"今日预计: {round(时薪*16,3)} 宝石   时薪: {round(时薪,3)} 宝石\n "
                 f"今日获取: {data['todayRocks']} 宝石   {data['todayShells']} 贝壳\n",
                 f"\n {pTitle('开源项目')}\n\n",
                 f"项目地址: github.com/lswlc33/autoFunBlock ",
