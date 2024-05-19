@@ -7,21 +7,29 @@ os.system("clear")
 
 is_paid = 0
 is_upated = 0
-count = 0.1
+投入宝石 = 0.1
 issue = 大逃杀_信息()["issue"]
+roomid = 0
+
 while True:
     try:
         new_issue = 大逃杀_信息()["issue"]
+        prevRoomNumber = 大逃杀_信息()["prevRoomNumber"]
         if not is_upated and new_issue != issue:
+            if is_paid:
+                red = "\033[31m凉了\033[39m"
+                print(
+                    f"{当前时间()}  第 {new_issue} 期 {red if roomid==int(prevRoomNumber) else '赢了'}"
+                )
             print(f"{当前时间()}  进入第 {new_issue} 期")
             issue = new_issue
             is_paid = 0
             is_upated = 1
 
         if 5 < 大逃杀_信息()["countdown"] < 40 and not is_paid:
-            roomid = get_best_room()
-            大逃杀_投入(roomNumber=roomid, costMedal=count)
-            print(f"{当前时间()}  投入 {get_real_room(roomid)} 一次宝石 {count}")
+            roomid = get_best_room(2)
+            大逃杀_投入(roomNumber=roomid, costMedal=投入宝石)
+            print(f"{当前时间()}  投入 {get_real_room(roomid)} 宝石 {投入宝石}")
 
             is_paid = 1
             is_upated = 0
