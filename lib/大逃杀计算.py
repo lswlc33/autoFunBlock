@@ -1,8 +1,10 @@
+import random
 import pandas as pd
 import math
 from lib.大逃杀 import get_real_room, 大逃杀_信息
 
 file_path = "data/escape.csv"
+
 
 def read_csv():
     # 读取csv文件
@@ -68,9 +70,14 @@ def get_m_stat(num):
     :param num: 最近场数
     :return: 消耗宝石，获得宝石，盈亏
     """
-    df = read_csv().sort_values(by="期数", ascending=False).head(num)
+    df = read_csv().tail(num)
+    print(df)
     paid_m = round(sum(df["消耗宝石"]), 2)
-    win_m = round(sum(df["获得宝石"]), 2)
+    win_m = 0
+    for i in range(len(df)):
+        if df.iloc[i]["是否获胜"] != -1:
+            win_m += df.iloc[i]["获得宝石"]
+    win_m = round(win_m, 2)
     total_m = round(win_m - paid_m, 2)
     return paid_m, win_m, total_m
 
@@ -89,6 +96,8 @@ def get_best_room(type=1):
                 best_room = i
         return best_room
     elif type == 2:
+        return random.randint(1, 8)
+    elif type == 3:
         pass
 
 
