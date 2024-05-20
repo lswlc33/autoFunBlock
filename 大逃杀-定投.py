@@ -8,7 +8,7 @@ is_paid = 0
 is_upated = 0
 issue = 大逃杀_信息()["issue"]
 投入宝石 = input("输入投入定投宝石: ")
-roomid = input("输入房间号(1-8): ")
+roomid = int(input("输入房间号(1-8): "))
 
 
 while True:
