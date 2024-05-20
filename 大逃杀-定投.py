@@ -10,6 +10,7 @@ issue = 大逃杀_信息()["issue"]
 投入宝石 = input("输入投入定投宝石: ")
 roomid = int(input("输入房间号(1-8): "))
 
+print(f"{当前时间()} 开始定投: {get_real_room(roomid)} 每期 {投入宝石} 宝石")
 
 while True:
     try:
