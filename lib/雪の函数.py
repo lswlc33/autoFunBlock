@@ -33,3 +33,30 @@ def 当前时间(type=1):
 def is_time_to_sleep():
     current_time = datetime.datetime.now().time()
     return datetime.time(0, 0) <= current_time <= datetime.time(8, 0)
+
+
+def decompose_number(num):
+    result = []
+    num = str(num)
+    in1, flo = num.split(".")
+    in1 = int(in1)
+    flo = float(f"0.{flo}")
+    while in1 > 0:
+        if in1 >= 100:
+            result.append(100)
+            in1 -= 100
+        elif in1 >= 50:
+            result.append(50)
+            in1 -= 50
+        elif in1 >= 10:
+            result.append(10)
+            in1 -= 10
+        elif in1 >= 1:
+            result.append(1)
+            in1 -= 1
+    while flo > 0:
+        if flo >= 0.1:
+            result.append(0.1)
+            flo = round(flo - 0.1, 1)
+
+    return result
