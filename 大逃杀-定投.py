@@ -59,7 +59,7 @@ def 投入(rock_num):
     if r.get("message", "ok") == "ok":
         print(f"{当前时间()}  投入 {get_real_room(roomid)} 宝石 {rock_num}")
     else:
-        print(f"{当前时间()}  投入失败 {r.get("message", "ok")}")
+        print(f"{当前时间()}  投入失败 {r.get('message', 'ok')}")
 
 
 def main():
