@@ -3,6 +3,7 @@ from datetime import datetime
 from lib.乌龟 import *
 from lib.宝石矿洞 import *
 from lib.登录信息 import *
+from lib.贝壳 import 贝壳市场
 from lib.账号 import 验证token
 from lib.雪の函数 import cleanT, pTitle, is_time_to_sleep, 当前时间
 
@@ -10,6 +11,7 @@ data = ""
 history = ""
 乌龟ID = ""
 is_sleep = 0
+shell_sell_rice = 0
 
 
 def pet_heartbeat():
@@ -39,22 +41,28 @@ def pet_heartbeat():
 
 def update_data():
     """刷新数据"""
+    global shell_sell_rice
     while True:
         try:
             global data, history
             data = dict(获取乌龟信息())
             history = dict(捡宝历史())
+            shell_sell_rice = float(贝壳市场(0)[0]["price"])
             time.sleep(1)
         except Exception as e:
             print("\n刷新异常!")
             time.sleep(1)
 
 
+def calc_shell_to_rock():
+    return round(float(data["shells"]) * shell_sell_rice, 2)
+
+
 def pick_up():
     """捡起宝石"""
     while True:
         if is_sleep:
-            time.sleep(60)
+            time.sleep(180)
             continue
         try:
             捡起宝石()
@@ -86,7 +94,7 @@ def main():
                 f"\n 方块兽乌龟面板    时间: {当前时间(2)}",
                 f"\n 乌龟自动喂养: {get_value('auto_feed')}   矿洞自动加时: {get_value('auto_extend')}",
                 f"\n\n {pTitle('我的资产')}\n\n",
-                f"{data['rocks']} 宝石\t   {data['shells']}贝壳",
+                f"{data['rocks']} 宝石    {data['shells']} 贝壳约 {calc_shell_to_rock()} 宝石",
                 f"\n\n {pTitle(f'我的乌龟{{}}{{}}'.format('-睡眠中' if is_sleep else '','-捡宝中' if data['desktopDisplay'] else '-已召回'))}\n\n"
                 f" 乌龟ID: {data['id']}\t   组件SN: {data['sn']}\n",
                 f"乌龟性别：{data['gender']}\t代数: {data['generation']}\n",
