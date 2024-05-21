@@ -26,7 +26,7 @@ def 信息询问():
     if 宝石模式 == "1":
         rock_num = input("输入投入定投宝石: ")
     elif 宝石模式 == "2":
-        概率宝石 = input().split(",")
+        概率宝石 = input("请按照例子书写概率：").split(",")
 
     print("1. 固定房间")
     print("2. 随机房间")
