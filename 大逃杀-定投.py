@@ -56,10 +56,10 @@ def 投入房间():
 
 def 投入(rock_num):
     r = 大逃杀_投入(roomNumber=roomid, costMedal=rock_num)
-    if r.get("message", "error") == "error":
+    if r.get("message", "ok") == "ok":
         print(f"{当前时间()}  投入 {get_real_room(roomid)} 宝石 {rock_num}")
     else:
-        print(f"{当前时间()}  投入失败")
+        print(f"{当前时间()}  投入失败 {r.get("message", "ok")}")
 
 
 def main():
@@ -73,12 +73,13 @@ def main():
         if not is_updated and new_issue != issue:
             if is_paid:
                 # 判断上局胜负
-                red = "\033[31m凉了\033[39m"
+                red = "\033[31m凉了TAT\033[39m"
                 if int(roomid) == int(prevRoomNumber):
                     print(f"{当前时间()}  第 {new_issue-1} 期 {red}")
                 else:
+                    win_m_num = round(win_m-float(rock_num),4) if win_m else "不知道"
                     print(
-                        f"{当前时间()}  第 {new_issue-1} 期 赢得 {round(win_m-float(rock_num),4)} 宝石"
+                        f"{当前时间()}  第 {new_issue-1} 期 赢得 {win_m_num} 宝石"
                     )
             print(f"{当前时间()}  进入第 {new_issue} 期")
             issue = new_issue
