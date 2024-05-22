@@ -71,7 +71,6 @@ def get_m_stat(num):
     :return: 消耗宝石，获得宝石，盈亏
     """
     df = read_csv().tail(num)
-    print(df)
     paid_m = round(sum(df["消耗宝石"]), 2)
     win_m = 0
     for i in range(len(df)):
