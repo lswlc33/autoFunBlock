@@ -1,5 +1,4 @@
-import threading, os, time
-from datetime import datetime
+import threading, time
 from lib.乌龟 import *
 from lib.宝石矿洞 import *
 from lib.登录信息 import *
@@ -16,42 +15,39 @@ shell_sell_rice = 0
 
 def pet_heartbeat():
     global is_sleep
-    while True:
-        if not data:
-            continue
-        # 睡眠检测
-        if is_time_to_sleep():
-            if data["desktopDisplay"] == 1:
-                召回显示乌龟(0, 乌龟ID)
-            is_sleep = 1
-        else:
-            if data["desktopDisplay"] == 0:
-                召回显示乌龟(1, 乌龟ID)
-            is_sleep = 0
-        # 心跳
-        try:
-            time.sleep(2)
-            if is_sleep:
-                continue
-            宠物心跳()
-        except Exception as e:
-            print(f"\n刷新异常!\n{e}")
-            time.sleep(1)
+
+    if not data:
+        return
+    # 睡眠检测
+    if is_time_to_sleep():
+        if data["desktopDisplay"] == 1:
+            召回显示乌龟(0, 乌龟ID)
+        is_sleep = 1
+    else:
+        if data["desktopDisplay"] == 0:
+            召回显示乌龟(1, 乌龟ID)
+        is_sleep = 0
+    # 心跳
+    try:
+        if is_sleep:
+            return
+        宠物心跳()
+    except Exception as e:
+        print(f"\n刷新异常!\n{e}")
 
 
 def update_data():
     """刷新数据"""
     global shell_sell_rice
-    while True:
-        try:
-            global data, history
-            data = dict(获取乌龟信息())
-            history = dict(捡宝历史())
-            shell_sell_rice = float(贝壳市场(0)[0]["price"])
-            time.sleep(1)
-        except Exception as e:
-            print("\n刷新异常!")
-            time.sleep(1)
+
+    try:
+        global data, history
+        data = dict(获取乌龟信息())
+        history = dict(捡宝历史())
+        shell_sell_rice = float(贝壳市场(0)[0]["price"])
+
+    except Exception as e:
+        print("\n刷新异常!")
 
 
 def calc_shell_to_rock():
@@ -60,15 +56,12 @@ def calc_shell_to_rock():
 
 def pick_up():
     """捡起宝石"""
-    while True:
-        if is_sleep:
-            time.sleep(180)
-            continue
-        try:
-            捡起宝石()
-        except Exception as e:
-            print(f"\n刷新异常!\n{e}")
-            time.sleep(60)
+    if is_sleep:
+        return
+    try:
+        捡起宝石()
+    except Exception as e:
+        print(f"\n刷新异常!\n{e}")
 
 
 def main():
@@ -125,15 +118,13 @@ def main():
 
 
 def cave_mine():
-    while True:
-        try:
-            挖矿(0)
-            挖矿(1)
-            if 剩余挖矿时间() < 24.00:
-                挖矿(2)  # 自动加时
-        except:
-            pass
-        time.sleep(600)
+    try:
+        挖矿(0)
+        挖矿(1)
+        if 剩余挖矿时间() < 24.00:
+            挖矿(2)  # 自动加时
+    except:
+        pass
 
 
 if __name__ == "__main__":
@@ -148,18 +139,18 @@ if __name__ == "__main__":
         input()
         exit()
 
-    # 开始挂
-    update_thread = threading.Thread(target=update_data)
+    # 开始运行
+    update_thread = threading.Timer(2, update_data)
     update_thread.start()
 
-    heartbeat_thread = threading.Thread(target=pet_heartbeat)
+    heartbeat_thread = threading.Timer(5, pet_heartbeat)
     heartbeat_thread.start()
 
-    pickup_thread = threading.Thread(target=pick_up)
+    pickup_thread = threading.Timer(5, pick_up)
     pickup_thread.start()
 
     if get_value("auto_extend"):
-        cavemine_thread = threading.Thread(target=cave_mine)
+        cavemine_thread = threading.Timer(300, cave_mine)
         cavemine_thread.start()
 
     main()
