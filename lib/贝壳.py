@@ -7,7 +7,7 @@ session.headers = headers
 
 
 def 贝壳信息():
-    response = requests.post(
+    response = session.post(
         url="https://block-api.lucklyworld.com/v6/api/pets/shells/trade/index",
         headers=headers,
     )
@@ -46,7 +46,7 @@ def 贝壳交易(type, tradeId, quantity):
 
 
 def get_shells_trade_log(page=1):
-    return requests.post(
+    return session.post(
         url="https://block-api.lucklyworld.com/v6/api/pets/shells/trade/logs",
         data=f"page={page}",
         headers=headers,
