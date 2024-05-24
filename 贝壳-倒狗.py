@@ -87,10 +87,15 @@ def check_market_loop():
 
     if not shells_info["is_sold"]:
         print("补救流程")
-        print(shells_info["is_sold"])
-        shells_info["is_sold"] = sell_shell(
-            shells_info["tradeId1"], shells_info["sold_quantity"]
-        )
+        if shells_info["sold_quantity"] > shells_info["quantity1"]:
+            if sell_shell(shells_info["tradeId1"], shells_info["quantity1"]):
+                shells_info["sold_quantity"] = (
+                    shells_info["sold_quantity"] - shells_info["quantity1"]
+                )
+        else:
+            shells_info["is_sold"] = sell_shell(
+                shells_info["tradeId1"], shells_info["sold_quantity"]
+            )
 
     elif shells_info["myshells"] >= 300.00:
         print("闲置流程")
