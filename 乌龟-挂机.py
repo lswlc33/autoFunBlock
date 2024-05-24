@@ -131,6 +131,7 @@ def cave_mine():
             挖矿(2)  # 自动加时
     except:
         pass
+    cavemine_thread.start()
 
 
 if __name__ == "__main__":
@@ -146,14 +147,9 @@ if __name__ == "__main__":
         exit()
 
     # 开始运行
-    update_thread = threading.Timer(2, update_data)
-    update_thread.start()
-
-    heartbeat_thread = threading.Timer(5, pet_heartbeat)
-    heartbeat_thread.start()
-
-    pickup_thread = threading.Timer(5, pick_up)
-    pickup_thread.start()
+    update_data()
+    pet_heartbeat()
+    pick_up()
 
     if get_value("auto_extend"):
         cavemine_thread = threading.Timer(300, cave_mine)
