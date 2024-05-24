@@ -34,6 +34,8 @@ def pet_heartbeat():
         宠物心跳()
     except Exception as e:
         print(f"\n刷新异常!\n{e}")
+    heartbeat_thread = threading.Timer(5, pet_heartbeat)
+    heartbeat_thread.start()
 
 
 def update_data():
@@ -48,6 +50,8 @@ def update_data():
 
     except Exception as e:
         print("\n刷新异常!")
+    update_thread = threading.Timer(2, update_data)
+    update_thread.start()
 
 
 def calc_shell_to_rock():
@@ -62,6 +66,8 @@ def pick_up():
         捡起宝石()
     except Exception as e:
         print(f"\n刷新异常!\n{e}")
+    pickup_thread = threading.Timer(5, pick_up)
+    pickup_thread.start()
 
 
 def main():
