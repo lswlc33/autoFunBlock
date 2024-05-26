@@ -47,9 +47,9 @@ def 获取乌龟信息():
         "strength": data["attribute"]["strength"],
         "luck": data["attribute"]["luck"],
         # 乌龟状态
-        "hunger": data["hunger"]["currentVal"],
-        "cleanliness": data["cleanliness"]["currentVal"],
-        "healthiness": data["healthiness"]["currentVal"],
+        "hunger": int(data["hunger"]["currentVal"]),
+        "cleanliness": int(data["cleanliness"]["currentVal"]),
+        "healthiness": int(data["healthiness"]["currentVal"]),
         # 探测器
         "detector": data["detector"]["level"],
         "desktopDisplay": data["desktopDisplay"],

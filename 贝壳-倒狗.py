@@ -1,8 +1,5 @@
-from concurrent.futures import thread
-from re import T
 import time
 from lib.贝壳 import 贝壳信息, 贝壳市场, 贝壳交易
-from lib.雪の函数 import 当前时间
 import threading
 
 
@@ -86,6 +83,9 @@ def check_market_loop():
     global shells_info
 
     if not shells_info["is_sold"]:
+        print("宝石低于200,发起补救")
+        if shells_info["myshells"] < 200.0:
+            shells_info["is_sold"] = True
         print("补救流程")
         if shells_info["sold_quantity"] > shells_info["quantity1"]:
             if sell_shell(shells_info["tradeId1"], shells_info["quantity1"]):

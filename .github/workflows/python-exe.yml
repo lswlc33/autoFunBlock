@@ -43,6 +43,7 @@ jobs:
                   pyinstaller -F 乌龟-挂机.py
                   pyinstaller -F 大逃杀-监控.py
                   pyinstaller -F 大逃杀-定投.py
+                  pyinstaller -F 贝壳-倒狗.py
             # 上传结果为 artifact
             - name: Upload results
               uses: actions/upload-artifact@v4.3.3
