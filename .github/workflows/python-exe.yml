@@ -39,11 +39,11 @@ jobs:
             # 打包 exe
             - name: Package
               run: |
-                  pyinstaller -F 登录.py
-                  pyinstaller -F 乌龟-挂机.py
-                  pyinstaller -F 大逃杀-监控.py
-                  pyinstaller -F 大逃杀-定投.py
-                  pyinstaller -F 贝壳-倒狗.py
+                  pyinstaller -F 登录.py -i res/favicon.ico
+                  pyinstaller -F 乌龟-挂机.py -i res/favicon.ico
+                  pyinstaller -F 大逃杀-监控.py -i res/favicon.ico
+                  pyinstaller -F 大逃杀-定投.py -i res/favicon.ico
+                  pyinstaller -F 贝壳-倒狗.py -i res/favicon.ico
             # 上传结果为 artifact
             - name: Upload results
               uses: actions/upload-artifact@v4.3.3
