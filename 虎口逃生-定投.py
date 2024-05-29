@@ -17,6 +17,9 @@ info = {
     "is_get_result": False,
     "is_reset": False,
     "result": None,
+    "win": 0,
+    "lose": 0,
+    "profit": 0,
 }
 
 
@@ -38,7 +41,6 @@ def get_escapeResult():
 def reset_escape():
     if info["is_reset"]:
         return
-    info["is_get_result"] = False
     info["is_participate"] = False
     info["is_placing"] = False
     info["is_reset"] = True
@@ -48,9 +50,10 @@ def main():
     global info
     data = escape_polling()
     cleanT()
-    print("倒计时: ", data["countdown"])
+    print(f"倒计时: {data['countdown']}")
     print("-" * 20)
-    print("期数: ", data["issue"], "宝石: ", data["myGem"])
+    print(f"期数: {data['issue']} 宝石: {data['myGem']}")
+    print(f"赢: {info['win']} 输: {info['lose']} 利润: {info['profit']}")
     print(
         "已参与:",
         info["is_participate"],
@@ -61,18 +64,12 @@ def main():
     )
     print("-" * 20)
     if info["result"]:
-        print("输赢", info["result"]["myState"])
+        print(f"输赢: {info['result']['myState']}")
         print(
-            "投入动物",
-            info["result"]["animalId"],
-            "击杀动物",
-            info["result"]["killedAnimalId"],
+            f"投入动物: {info['result']['animalId']}, 击杀动物: {info['result']['killedAnimalId']}"
         )
         print(
-            "投入宝石",
-            info["result"]["myInputGem"],
-            "获得宝石",
-            info["result"]["getGem"],
+            f"投入宝石: {info['result']['myInputGem']}, 获得宝石: {info['result']['getGem']}"
         )
     else:
         print("等待结算")
@@ -83,6 +80,8 @@ def main():
 
     if data["status"] == 1:
         print("🥰 进行中")
+        if info["is_get_result"]:
+            info["is_get_result"] = False
         if not info["is_participate"]:
             escape_participate(info["animalId"])
             info["is_participate"] = True
@@ -100,6 +99,11 @@ def main():
         if res:
             info["is_get_result"] = True
             info["result"] = res
+            if res["myState"] == 1:
+                info["win"] += 1
+            else:
+                info["lose"] += 1
+            info["profit"] += round(float(res["getGem"]) - float(res["myInputGem"]), 4)
             reset_escape()
 
     time.sleep(2)
