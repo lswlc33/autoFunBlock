@@ -1,21 +1,11 @@
-from math import inf
 import time
-
-from matplotlib.pylab import f
 from lib.雪の函数 import cleanT
-import pprint
-from requests import session
-from lib.登录信息 import headers
 from lib.虎口逃生 import (
     escape_participate,
     escape_polling,
     escape_run_list,
     escape_placing,
 )
-
-
-session = session()
-session.headers = headers
 
 info = {
     "animalId": None,
@@ -59,7 +49,7 @@ def main():
     data = escape_polling()
     cleanT()
     print("倒计时: ", data["countdown"])
-    print("-"*20)
+    print("-" * 20)
     print("期数: ", data["issue"], "宝石: ", data["myGem"])
     print(
         "已参与:",
@@ -69,7 +59,7 @@ def main():
         "已结算:",
         info["is_get_result"],
     )
-    print("-"*20)
+    print("-" * 20)
     if info["result"]:
         print("输赢", info["result"]["myState"])
         print(
@@ -84,7 +74,9 @@ def main():
             "获得宝石",
             info["result"]["getGem"],
         )
-    print("-"*20)
+    else:
+        print("等待结算")
+    print("-" * 20)
     if data["status"] == 0:
         print("😴 未开始")
         reset_escape()
