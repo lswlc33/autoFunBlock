@@ -1,3 +1,4 @@
+from logging import raiseExceptions
 import threading, time
 from lib.乌龟 import *
 from lib.宝石矿洞 import *
@@ -15,22 +16,21 @@ shell_sell_rice = 0
 
 def pet_heartbeat():
     global is_sleep
-
-    if not data:
-        return
-    # 睡眠检测
-    if is_time_to_sleep():
-        if data["desktopDisplay"] == 1:
-            召回显示乌龟(0, 乌龟ID)
-        is_sleep = 1
-    else:
-        if data["desktopDisplay"] == 0:
-            召回显示乌龟(1, 乌龟ID)
-        is_sleep = 0
-    # 心跳
     try:
+        if not data:
+            raise Exception("获取失败")
+        # 睡眠检测
+        if is_time_to_sleep():
+            if data["desktopDisplay"] == 1:
+                召回显示乌龟(0, 乌龟ID)
+            is_sleep = 1
+        else:
+            if data["desktopDisplay"] == 0:
+                召回显示乌龟(1, 乌龟ID)
+            is_sleep = 0
+        # 心跳
         if is_sleep:
-            return
+            raise Exception("is_sleep")
         宠物心跳()
     except Exception as e:
         print(f"\n刷新异常!\n{e}")
