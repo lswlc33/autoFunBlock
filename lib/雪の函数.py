@@ -27,7 +27,7 @@ def 当前时间(type=1):
     if type == 1:
         return now_time.strftime("%Y-%m-%d %H:%M:%S")
     if type == 2:
-        return now_time.strftime("%m月%d %H:%M:%S")
+        return now_time.strftime("%m-%d %H:%M:%S")
 
 
 def is_time_to_sleep():
