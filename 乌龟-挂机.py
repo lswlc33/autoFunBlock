@@ -110,7 +110,7 @@ def main():
                 f"项目地址: github.com/lswlc33/autoFunBlock ",
             )
             if bool(get_value("auto_feed")) and not is_sleep:
-                if int(data["hunger"]) < 75:
+                if int(data["hunger"]) < 78:
                     乌龟喂养(乌龟ID)
                     乌龟清理(乌龟ID)
 
