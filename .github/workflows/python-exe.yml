@@ -45,6 +45,7 @@ jobs:
                   pyinstaller -F 大逃杀-定投.py -i res/favicon.ico
                   pyinstaller -F 虎口逃生-定投.py -i res/favicon.ico
                   pyinstaller -F 贝壳-倒狗.py -i res/favicon.ico
+                  pyinstaller -F 宝石-赠送.py -i res/favicon.ico
 
             # 上传结果为 artifact
             - name: Upload results

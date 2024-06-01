@@ -1,7 +1,8 @@
-import requests
+from requests import Session
 from lib.登录信息 import headers
 
-session = requests.Session()
+session = Session()
+session.headers = headers
 
 
 def 召回显示乌龟(state, petId):
@@ -12,14 +13,14 @@ def 召回显示乌龟(state, petId):
     """
     url = "https://block-api.lucklyworld.com/v6/api/blockbeast/pets/desktop/display"
     payload = f"state={state}&petId={petId}"
-    response = session.post(url, data=payload, headers=headers)
+    response = session.post(url, data=payload)
     print(response.json())
 
 
 def 获取乌龟信息():
     url = "https://block-api.lucklyworld.com/v6/api/blockbeast/pets/index"
 
-    response = session.post(url, headers=headers)
+    response = session.post(url)
 
     data = response.json()
 
@@ -60,7 +61,7 @@ def 获取乌龟信息():
 def 升级探测器():
     url = "https://block-api.lucklyworld.com/v6/api/pets/detector/upgrade"
 
-    response = session.post(url, headers=headers)
+    response = session.post(url)
 
     print(response.json())
 
@@ -87,19 +88,19 @@ def 乌龟喂养(petId):
 
 def 捡起宝石():
     url = "https://block-api.lucklyworld.com/v6/api/pets/pickup/rocks"
-    response = session.post(url, headers=headers)
+    response = session.post(url)
     return response.json()
 
 
 def 宠物心跳():
     url = "https://block-api.lucklyworld.com/v6/api/blockbeast/pets/desktop/ping"
-    response = session.post(url, headers=headers)
+    response = session.post(url)
     return response.json()
 
 
 def 捡宝历史():
     url = "https://block-api.lucklyworld.com/v6/api/pets/pickup/rocks/logs"
-    response = session.post(url, headers=headers)
+    response = session.post(url)
     return response.json()
 
 

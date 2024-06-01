@@ -1,7 +1,8 @@
-import requests
+from requests import Session
 from lib.登录信息 import headers
 
-session = requests.Session()
+session = Session()
+session.headers = headers
 
 
 def 大逃杀_信息():

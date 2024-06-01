@@ -1,5 +1,8 @@
-import requests
+from requests import Session
 from lib.登录信息 import headers
+
+session = Session()
+session.headers = headers
 
 
 def 挖矿(state):
@@ -13,7 +16,7 @@ def 挖矿(state):
 
     payload = f"state={state}&caveType=1"
 
-    response = requests.post(url, data=payload, headers=headers)
+    response = session.post(url, data=payload)
 
     return response.json()
 
@@ -21,7 +24,7 @@ def 挖矿(state):
 def 剩余挖矿时间():
     url = "https://block-api.lucklyworld.com/v11/api/cave/auto/digging/page"
 
-    response = requests.post(url, headers=headers)
+    response = session.post(url)
 
     data = response.json()
 

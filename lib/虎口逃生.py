@@ -1,8 +1,8 @@
-from requests import session
+from requests import Session
 from lib.登录信息 import headers
 
 
-session = session()
+session = Session()
 session.headers = headers
 
 
