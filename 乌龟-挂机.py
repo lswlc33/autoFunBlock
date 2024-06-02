@@ -1,4 +1,3 @@
-from logging import raiseExceptions
 import threading, time
 from lib.乌龟 import *
 from lib.宝石矿洞 import *
@@ -127,10 +126,11 @@ def cave_mine():
     try:
         挖矿(0)
         挖矿(1)
-        if 剩余挖矿时间() < 24.00:
+        if 剩余挖矿时间() < 48.00:
             挖矿(2)  # 自动加时
     except:
         pass
+    cavemine_thread = threading.Timer(5, cave_mine)
     cavemine_thread.start()
 
 
@@ -152,7 +152,6 @@ if __name__ == "__main__":
     pick_up()
 
     if get_value("auto_extend"):
-        cavemine_thread = threading.Timer(300, cave_mine)
-        cavemine_thread.start()
+        cave_mine()
 
     main()
