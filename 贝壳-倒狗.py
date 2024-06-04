@@ -83,7 +83,6 @@ def check_market_loop():
     global shells_info
 
     if not shells_info["is_sold"]:
-        print("宝石低于200,发起补救")
         if shells_info["myshells"] < 200.0:
             shells_info["is_sold"] = True
         print("补救流程")

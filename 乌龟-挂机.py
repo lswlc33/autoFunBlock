@@ -28,9 +28,8 @@ def pet_heartbeat():
                 召回显示乌龟(1, 乌龟ID)
             is_sleep = 0
         # 心跳
-        if is_sleep:
-            raise Exception("is_sleep")
-        宠物心跳()
+        if not is_sleep:
+            宠物心跳()
     except Exception as e:
         print(f"\n刷新异常!\n{e}")
     heartbeat_thread = threading.Timer(5, pet_heartbeat)

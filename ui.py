@@ -1,8 +1,11 @@
 import base64
+import csv
 import tkinter as tk
-from tkinter import DISABLED, ttk
+from tkinter import messagebox, ttk
 import threading, time
 from lib.乌龟 import *
+from lib.大逃杀 import get_real_room, 大逃杀_信息
+from lib.大逃杀计算 import get_m_stat, get_win_stat
 from lib.宝石矿洞 import *
 from lib.登录信息 import *
 from lib.贝壳 import 贝壳市场
@@ -13,18 +16,19 @@ from lib.雪の函数 import is_time_to_sleep, 当前时间
 
 def send_code():
     res = 发送验证码(login_entry_phone.get())
-    if res.get("code") == 0:
-        tk.messagebox.showinfo("成功", "发送成功")
+    print(res)
+    if res.get("errorCode") == 400:
+        messagebox.showerror("错误", f"发送失败! {res.get('message')}")
     else:
-        tk.messagebox.showerror("错误", f"发送失败! {res.get('message')}")
+        messagebox.showinfo("成功", "发送成功")
 
 
 def login():
     res = 登录(login_entry_phone.get(), login_entry_code.get())
     if res.get("errorCode") == 400:
-        tk.messagebox.showerror(f"登录失败! ", "{res.get('message')}")
+        messagebox.showerror(f"登录失败! ", "{res.get('message')}")
     else:
-        tk.messagebox.showinfo("登录成功!", "token 已经写入 setting.ini")
+        messagebox.showinfo("登录成功!", "token 已经写入 setting.ini")
         write_value("token", res.get("token"))
         login_text_token.insert(1.0, res.get("token"))
 
@@ -39,14 +43,11 @@ def get_login():
         threading.Thread(target=main).start()
         threading.Thread(target=pet_heartbeat).start()
         threading.Thread(target=pick_up).start()
+        threading.Thread(target=escape_watch_loop).start()
         if get_value("auto_extend"):
             cave_mine()
     else:
         app.title(f"未登录或登录过期 - 方块兽")
-
-
-def cleanT():
-    pet_info_textarea.delete(1.0, tk.END)
 
 
 data = ""
@@ -55,6 +56,71 @@ history = ""
 is_sleep = 0
 shell_sell_rice = 0
 need_stop = 0
+
+
+def escape_watch_loop():
+    data = ""
+    当前期数 = 0
+    num = 2000
+    if not os.path.exists("data/escape.csv"):
+        with open("data/escape.csv", "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(
+                [
+                    "期数",
+                    "时间",
+                    "击杀房间",
+                    "上局击杀房间",
+                    "是否获胜",
+                    "消耗宝石",
+                    "获得宝石",
+                    "我的宝石",
+                ]
+            )
+
+    while True:
+        try:
+            if need_stop:
+                return
+            data = 大逃杀_信息()
+            win, lose, win_rate = get_win_stat(num)
+            paid_m, win_m, total_m = get_m_stat(num)
+            escape_wacth_textarea.delete(1.0, tk.END)
+            escape_info_text = [
+                f"\n⨀ {'大逃杀监控'}\n\n",
+                f" 当前期数: {data['issue']}\n",
+                f" 当前时间: {当前时间()}\n\n",
+                f"⨀ 本期信息\n\n",
+                f" 倒计时: {data['countdown']}\t\t是否获胜: {data['myIsWin']}\n",
+                f" 本期击杀: {get_real_room(data['killNumber'])}\t上期击杀: {get_real_room(data['prevRoomNumber'])}\n",
+                f" 是否结算: {'是' if data['state']==2 else '否'}\t\t我的宝石: {data['myWallet']}\n",
+                f"\n⨀ {f'近 {num} 场数据胜率'}\n\n",
+                f" 胜场: {win}\t败场: {lose}\t胜率: {win_rate}\n",
+                f" 投入: {paid_m}\t赚的: {win_m}\t利润: {total_m}",
+            ]
+
+            for i in escape_info_text:
+                escape_wacth_textarea.insert(tk.END, i)
+
+            if data["state"] == 2 and 当前期数 != data["issue"]:
+                with open("data/escape.csv", "a", newline="", encoding="utf-8") as f:
+                    writer = csv.writer(f)
+                    writer.writerow(
+                        [
+                            data["issue"],
+                            当前时间(),
+                            data["killNumber"],
+                            data["prevRoomNumber"],
+                            data["myIsWin"],
+                            data["myCostMedal"],
+                            data["myWinMedal"],
+                            data["myWallet"],
+                        ]
+                    )
+                当前期数 = data["issue"]
+        except Exception as e:
+            print(f"错误: {e}")
+        time.sleep(1)
 
 
 def pet_heartbeat():
@@ -74,9 +140,8 @@ def pet_heartbeat():
                 召回显示乌龟(1, 乌龟ID)
             is_sleep = 0
         # 心跳
-        if is_sleep:
-            raise Exception("is_sleep")
-        宠物心跳()
+        if not is_sleep:
+            宠物心跳()
     except Exception as e:
         print(f"\n刷新异常!\n{e}")
     heartbeat_thread = threading.Timer(5, pet_heartbeat)
@@ -123,7 +188,7 @@ def main():
         if need_stop:
             return
         try:
-            cleanT()
+            pet_info_textarea.delete(1.0, tk.END)
             duration = (
                 sum(
                     int(x) * 60**i
@@ -224,6 +289,16 @@ if "__main__" == __name__:
     )
     pet_info_textarea.pack()
     ui_tab.add(frame_guaji, text="乌龟-挂机")
+
+    # 逃杀监控页面
+    frame_escape_wacth = tk.Frame(width=100, height=100)
+
+    escape_wacth_textarea = tk.Text(
+        frame_escape_wacth, height=25, width=50, font=("黑体", 12), bg="#F0F0F0", bd=0
+    )
+    escape_wacth_textarea.insert(tk.END, "\n⨀ 逃杀-监控\n")
+    escape_wacth_textarea.pack()
+    ui_tab.add(frame_escape_wacth, text="逃杀-监控")
 
     # 登录页面
     frame_login = tk.Frame()

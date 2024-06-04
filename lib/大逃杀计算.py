@@ -1,5 +1,5 @@
 import random
-import pandas as pd
+from pandas import read_csv as pd_read_csv
 import math
 from lib.大逃杀 import get_real_room, 大逃杀_信息
 
@@ -8,7 +8,7 @@ file_path = "data/escape.csv"
 
 def read_csv():
     # 读取csv文件
-    df = pd.read_csv(file_path)
+    df = pd_read_csv(file_path)
     return df
 
 
