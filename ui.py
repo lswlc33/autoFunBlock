@@ -1,27 +1,32 @@
 import base64
 import tkinter as tk
+from tkinter import DISABLED, ttk
 import threading, time
 from lib.乌龟 import *
 from lib.宝石矿洞 import *
 from lib.登录信息 import *
 from lib.贝壳 import 贝壳市场
-from lib.账号 import 验证token
+from lib.账号 import 发送验证码, 登录, 验证token
 import res.favicon as favicon
 from lib.雪の函数 import is_time_to_sleep, 当前时间
 
-app = tk.Tk()
-app.title("登录中 - 方块兽")
-app.resizable(False, False)
 
-tmp = open("tmp.ico","wb+")  
-tmp.write(base64.b64decode(favicon.img))#写入到临时文件中
-tmp.close()
-app.iconbitmap("tmp.ico")
-os.remove("tmp.ico") 
+def send_code():
+    res = 发送验证码(login_entry_phone.get())
+    if res.get("code") == 0:
+        tk.messagebox.showinfo("成功", "发送成功")
+    else:
+        tk.messagebox.showerror("错误", f"发送失败! {res.get('message')}")
 
 
-pet_info_textarea = tk.Text(app, height=28, width=50,font=("黑体", 12))
-pet_info_textarea.pack()
+def login():
+    res = 登录(login_entry_phone.get(), login_entry_code.get())
+    if res.get("errorCode") == 400:
+        tk.messagebox.showerror(f"登录失败! ", "{res.get('message')}")
+    else:
+        tk.messagebox.showinfo("登录成功!", "token 已经写入 setting.ini")
+        write_value("token", res.get("token"))
+        login_text_token.insert(1.0, res.get("token"))
 
 
 def get_login():
@@ -29,6 +34,13 @@ def get_login():
     is_login = 验证token()
     if is_login.get("errorCode") == None:
         app.title(f"{is_login['nickname']} - 方块兽")
+        # 开始运行
+        threading.Thread(target=update_data).start()
+        threading.Thread(target=main).start()
+        threading.Thread(target=pet_heartbeat).start()
+        threading.Thread(target=pick_up).start()
+        if get_value("auto_extend"):
+            cave_mine()
     else:
         app.title(f"未登录或登录过期 - 方块兽")
 
@@ -188,16 +200,53 @@ def init_loop():
     time.sleep(1)
     threading.Thread(target=get_login).start()
 
-    # 开始运行
-    threading.Thread(target=update_data).start()
-    threading.Thread(target=main).start()
-    threading.Thread(target=pet_heartbeat).start()
-    threading.Thread(target=pick_up).start()
-    if get_value("auto_extend"):
-        cave_mine()
-
 
 if "__main__" == __name__:
+    # 创建窗口
+    app = tk.Tk()
+    app.title("登录中 - 方块兽")
+    app.resizable(False, False)
+
+    # 修改图标
+    tmp = open("tmp.ico", "wb+")
+    tmp.write(base64.b64decode(favicon.img))
+    tmp.close()
+    app.iconbitmap("tmp.ico")
+    os.remove("tmp.ico")
+
+    # 创建Tabs
+    ui_tab = ttk.Notebook(app)
+
+    # guaji页面
+    frame_guaji = tk.Frame(width=100, height=100)
+    pet_info_textarea = tk.Text(
+        frame_guaji, height=28, width=50, font=("黑体", 12), bg="#F0F0F0", bd=0
+    )
+    pet_info_textarea.pack()
+    ui_tab.add(frame_guaji, text="乌龟-挂机")
+
+    # 登录页面
+    frame_login = tk.Frame()
+    login_label_phone = tk.Label(frame_login, text="手机号:")
+    login_label_phone.place(x=10, y=10)
+    login_entry_phone = tk.Entry(frame_login)
+    login_entry_phone.place(x=80, y=10)
+    login_label_code = tk.Label(frame_login, text="验证码:")
+    login_label_code.place(x=10, y=40)
+    login_entry_code = tk.Entry(frame_login)
+    login_entry_code.place(x=80, y=40)
+    login_button_get_code = tk.Button(frame_login, text="获取验证码", command=send_code)
+    login_button_get_code.place(x=10, y=80)
+    login_button_login = tk.Button(frame_login, text="登录", command=login)
+    login_button_login.place(x=100, y=80)
+    login_text_token = tk.Text(
+        frame_login, height=10, width=50, font=("黑体", 12), bg="#F0F0F0", bd=0
+    )
+    login_text_token.place(x=0, y=130)
+    ui_tab.add(frame_login, text="登录")
+
+    # 放置Tabs
+    ui_tab.pack()
 
     app.protocol("WM_DELETE_WINDOW", on_closing)
 
