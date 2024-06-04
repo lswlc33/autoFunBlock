@@ -129,6 +129,8 @@ while True:
         update_market_info()
         time.sleep(0.5)
         check_market_loop()
+    except KeyError:
+        pass
     except Exception as e:
         print(f"Error: {e}")
         time.sleep(1)
