@@ -45,7 +45,8 @@ def update_data():
         data = dict(获取乌龟信息())
         history = dict(捡宝历史())
         shell_sell_rice = float(贝壳市场(0)[0]["price"])
-
+    except KeyError:
+        pass
     except Exception as e:
         print("\n刷新异常!")
     update_thread = threading.Timer(2, update_data)
