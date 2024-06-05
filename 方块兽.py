@@ -1,8 +1,6 @@
-import base64
-import csv
 import tkinter as tk
 from tkinter import messagebox, ttk
-import threading, time
+import threading, time, csv, base64
 from lib.乌龟 import *
 from lib.大逃杀 import get_real_room, 大逃杀_信息
 from lib.大逃杀计算 import get_m_stat, get_win_stat
@@ -11,9 +9,8 @@ from lib.宝石矿洞 import *
 from lib.登录信息 import *
 from lib.贝壳 import 贝壳市场
 from lib.账号 import 发送验证码, 登录, 验证token
-import res.favicon as favicon
 from lib.雪の函数 import is_time_to_sleep, 当前时间
-
+import res.favicon as favicon
 
 data = ""
 history = ""
