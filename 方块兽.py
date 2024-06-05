@@ -52,7 +52,6 @@ def get_login():
         threading.Thread(target=main).start()
         threading.Thread(target=pet_heartbeat).start()
         threading.Thread(target=pick_up).start()
-        threading.Thread(target=escape_watch_loop).start()
         if get_value("auto_extend"):
             cave_mine()
     else:
@@ -119,6 +118,11 @@ def escape_watch_loop():
         except Exception as e:
             print(f"错误: {e}")
         time.sleep(1)
+
+
+def start_escape_wacth():
+    threading.Thread(target=escape_watch_loop).start()
+    escape_button_start.place_forget()
 
 
 def pet_heartbeat():
@@ -324,9 +328,12 @@ if "__main__" == __name__:
         justify="left",
         font=("黑体", 12),
     )
-    escape_wacth_textarea_text.set("\n⨀ 逃杀-监控\n")
+    escape_wacth_textarea_text.set("")
     escape_wacth_textarea.place(x=0, y=0)
-
+    escape_button_start = tk.Button(
+        frame_escape_wacth, text="开始监控", command=start_escape_wacth
+    )
+    escape_button_start.place(x=10, y=20)
     escape_label_manual = tk.Label(frame_escape_wacth, text="手动模式:")
     escape_label_manual.place(x=10, y=290)
     escape_label_manual_roomid_text = tk.Label(frame_escape_wacth, text="房间号:")
