@@ -6,6 +6,7 @@ import threading, time
 from lib.乌龟 import *
 from lib.大逃杀 import get_real_room, 大逃杀_信息
 from lib.大逃杀计算 import get_m_stat, get_win_stat
+from lib.宝石交易 import get_gift_logs
 from lib.宝石矿洞 import *
 from lib.登录信息 import *
 from lib.贝壳 import 贝壳市场
@@ -155,9 +156,10 @@ def update_data():
         data = dict(获取乌龟信息())
         history = dict(捡宝历史())
         shell_sell_rice = float(贝壳市场(0)[0]["price"])
-
+    except KeyError:
+        pass
     except Exception as e:
-        print("\n刷新异常!")
+        print(f"\n刷新异常!\n{e}")
     update_thread = threading.Timer(2, update_data)
     update_thread.start()
 
@@ -271,7 +273,12 @@ def on_room_change(event):
 
 
 def get_rocks_logs():
-    get_rocks_logs_text.set("adad")
+    test = ""
+    logs_list = get_gift_logs()["list"][:3]
+    for i in logs_list:
+        rocks = float(i["rocks"])
+        test += f"{i['datetime']} {i['rocks']} \n{'收到' if rocks > 0 else '赠送'} ID:{i['userId']} 昵称:{i['nickname']} \n\n"
+    get_rocks_logs_text.set(test)
 
 
 if "__main__" == __name__:
@@ -297,7 +304,7 @@ if "__main__" == __name__:
     ui_tab = ttk.Notebook(app)
 
     # guaji页面
-    frame_guaji = tk.Frame(width=100, height=500)
+    frame_guaji = tk.Frame(width=500, height=500)
     pet_info_textarea = tk.Label(
         frame_guaji,
         textvariable=pet_info_text,
@@ -318,7 +325,7 @@ if "__main__" == __name__:
         font=("黑体", 12),
     )
     escape_wacth_textarea_text.set("\n⨀ 逃杀-监控\n")
-    escape_wacth_textarea.pack()
+    escape_wacth_textarea.place(x=0, y=0)
 
     escape_label_manual = tk.Label(frame_escape_wacth, text="手动模式:")
     escape_label_manual.place(x=10, y=290)
@@ -343,6 +350,8 @@ if "__main__" == __name__:
     login_label_phone.place(x=10, y=10)
     login_entry_phone = tk.Entry(frame_rocks)
     login_entry_phone.place(x=90, y=10)
+    login_label_user_name = tk.Label(frame_rocks, text="未查询")
+    login_label_user_name.place(x=260, y=10)
     login_label_code = tk.Label(frame_rocks, text="赠送数量:")
     login_label_code.place(x=10, y=40)
     login_entry_code = tk.Entry(frame_rocks)
