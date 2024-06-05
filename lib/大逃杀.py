@@ -49,4 +49,10 @@ def get_real_room(num):
         "茶水间",
         "音乐室",
     ]
-    return rooms[int(num) - 1]
+    try:
+        if 0 < int(num) < 9:
+            return rooms[int(num) - 1]
+        else:
+            return False
+    except:
+        return False
