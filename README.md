@@ -30,7 +30,7 @@
 
 ## 2. 使用打包好的 exe
 
--   1. 去 Release (稳定渠道) 或者 Action (测试渠道) 下载打包好的 exe 文件
+-   1. 去 [Release](https://github.com/lswlc33/autoFunBlock/releases/latest) (稳定渠道) 或者 [Action](https://github.com/lswlc33/autoFunBlock/actions) (测试渠道) 下载打包好的 exe 文件
 -   2. 运行 需要的脚本
 
 ## 模块介绍
