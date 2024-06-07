@@ -48,7 +48,7 @@ def update_data():
     except KeyError:
         pass
     except Exception as e:
-        print("\n刷新异常!")
+        print("\n刷新异常!" + e)
     update_thread = threading.Timer(2, update_data)
     update_thread.start()
 
@@ -59,13 +59,12 @@ def calc_shell_to_rock():
 
 def pick_up():
     """捡起宝石"""
-    if is_sleep:
-        return
-    try:
-        捡起宝石()
-    except Exception as e:
-        print(f"\n刷新异常!\n{e}")
-    pickup_thread = threading.Timer(5, pick_up)
+    if not is_sleep:
+        try:
+            捡起宝石()
+        except Exception as e:
+            print(f"\n刷新异常!\n{e}")
+    pickup_thread = threading.Timer(60, pick_up)
     pickup_thread.start()
 
 
@@ -130,7 +129,7 @@ def cave_mine():
             挖矿(2)  # 自动加时
     except:
         pass
-    cavemine_thread = threading.Timer(5, cave_mine)
+    cavemine_thread = threading.Timer(60 * 10, cave_mine)
     cavemine_thread.start()
 
 
@@ -139,7 +138,7 @@ if __name__ == "__main__":
     cleanT()
     is_login = 验证token()
     if is_login.get("errorCode") == None:
-        print(f"\n你好，{is_login['nickname']}!")
+        print(f"\n你好, {is_login['nickname']}!")
         time.sleep(1)
     else:
         print("\ntoken 验证失败，请重新登录!")
