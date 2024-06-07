@@ -81,32 +81,34 @@ def sell_shell(id, quantity):
 
 def check_market_loop():
     global shells_info
-    # 解决当前贝壳不足
-    if not shells_info["is_sold"]:
-        if shells_info["myshells"] < 200.0:
-            shells_info["is_sold"] = True
-        print("补救流程")
-        if shells_info["sold_quantity"] > shells_info["quantity1"]:
-            # 解决意外喂养导致贝壳数量不足200的问题
-            if shells_info["sold_quantity"] - shells_info["quantity1"] < 200:
-                shells_info["is_sold"] = True
-            if sell_shell(shells_info["tradeId1"], shells_info["quantity1"]):
-                shells_info["sold_quantity"] = (
-                    shells_info["sold_quantity"] - shells_info["quantity1"]
-                )
-        else:
-            shells_info["is_sold"] = sell_shell(
-                shells_info["tradeId1"], shells_info["sold_quantity"]
-            )
 
-    elif shells_info["myshells"] >= 300.00:
+    if not shells_info["is_sold"]:
+        # 当前贝壳不足
+        if shells_info["myshells"] < 500.0:
+            shells_info["is_sold"] = True
+        else:
+            print("补救流程")
+            if shells_info["sold_quantity"] > shells_info["quantity1"]:
+                # 预防卖完不剩了
+                if shells_info["sold_quantity"] - shells_info["quantity1"] < 501:
+                    shells_info["is_sold"] = True
+                if sell_shell(shells_info["tradeId1"], shells_info["quantity1"]):
+                    shells_info["sold_quantity"] = (
+                        shells_info["sold_quantity"] - shells_info["quantity1"]
+                    )
+            else:
+                shells_info["is_sold"] = sell_shell(
+                    shells_info["tradeId1"], shells_info["sold_quantity"]
+                )
+
+    elif shells_info["myshells"] >= 600.00:
         print("闲置流程")
-        quantity = min(200, shells_info["myshells"] - 201)
+        quantity = min(200, shells_info["myshells"] - 501)
         sell_shell(shells_info["tradeId1"], quantity - 10)
 
     elif shells_info["price1"] >= 0.01:
         print("高价流程")
-        quantity = min(shells_info["quantity1"], shells_info["myshells"] - 201)
+        quantity = min(shells_info["quantity1"], shells_info["myshells"] - 501)
         sell_shell(shells_info["tradeId1"], quantity)
 
     elif shells_info["price2"] < 0.001:
