@@ -1,4 +1,10 @@
+# csqunfeng，玩不起，放着就死了
+不更了，反正龟④了
+![1000000237](https://github.com/lswlc33/autoFunBlock/assets/86835895/08fb9b5a-0c52-4f63-b2f6-be95ea2fd787)
+
+
 # 方块兽代挂
+
 
 🖊 方块兽邀请链接：[链接](http://s.jqsjgwb.cn/wx/s?_co=3411241&_st=v11FksFriends&_v=v11&_chan=90585)  
 💻 没地方挂机? 来试试: [挂机宝](https://www.beishaoidc.cn/aff/RQWPTPZP)  
